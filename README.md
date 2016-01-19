@@ -2,17 +2,17 @@
 
 ## A. Summary
 
-A BASH project generator using a template that provides a few basic functions and formatting options.
+A BASH project generator using a template that provides a few basic functions and text formatting options.
 
 Feel free to use as your own/improve on.
 
 ## B. Dependencies
 
-BASH.
+BASH 4 or later.
 
 ## C. Supported Systems
 
-Any nix or BSD system with BASH 4+ (may require some adjustments to work with older versions of BASH).
+Any nix or BSD system with BASH 4 or later (may require some adjustments to work with older versions of BASH).
 
 ### Installation
 
@@ -38,7 +38,7 @@ Any nix or BSD system with BASH 4+ (may require some adjustments to work with ol
   Completed. Project created in /Users/curtis/Code/my_new_project.
   ```
 
-This will create a project called "my_new_project", with version 0.1 in directory /usr/local/src/my_new_project .
+This will create a project called "my_new_project", with version 0.1 in directory /Users/curtis/Code/my_new_project .
 
 ### Notes
 
