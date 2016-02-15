@@ -1,0 +1,5 @@
+# Project variables and constants go here
+
+# CONSTANTS
+readonly project_name="PROJECT_NAME"
+readonly project_version="PROJECT_VERSION"

@@ -2,7 +2,12 @@
 
 ## A. Summary
 
-A BASH project generator using a template that provides a few basic functions and text formatting options.
+Quickly generate a simple BASH project from a set of template files. Some of the following functions are provided in bash-project:
+
+ * Text formatting (bold, normal, green, red and yellow)
+ * Trap control
+ * Message and error printing
+ * File/directory access check
 
 Feel free to use as your own/improve on.
 
@@ -40,10 +45,31 @@ Any nix or BSD system with BASH 4 or later (may require some adjustments to work
 
 This will create a project called "my_new_project", with version 0.1 in directory /Users/curtis/Code/my_new_project .
 
+### Reserved names
+
+```
+abrt
+force_exit
+home_dir
+includes_dir
+main
+msg
+project_name
+project_version
+t_bold
+test_access
+t_green
+t_normal
+t_red
+t_yellow
+usage
+
+```
+
 ### Notes
 
 1. Please ensure that the project_parent_directory already exists (eg: /home/user/code).
-2. Please do not use the '/' character in project names.
+2. Please do not use 'special' characters in project names.
 
 ## License
 

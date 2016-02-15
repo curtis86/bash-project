@@ -15,7 +15,11 @@ test_access() { test_target="$1" ; [ ! -w "${test_target}" ] && abrt "Unable to 
 
 readonly REQ_ARGS=3 ; [ $# -ne ${REQ_ARGS} ] && usage && exit 1
 readonly home_dir="$( cd "$( dirname $0 )" ; pwd )"
-readonly project_template_file="${home_dir}/bash-template.txt" ; test_access "${project_template_file}"
+readonly template_functions_file="${home_dir}/bash-project.sh.txt" ; test_access "${template_functions_file}"
+readonly project_template_file="${home_dir}/project-template.sh.txt" ; test_access "${project_template_file}"
+readonly project_template_vars_file="${home_dir}/project-vars.sh.txt" ; test_access "${project_template_vars_file}"
+readonly project_template_functions_file="${home_dir}/project-functions.sh.txt" ; test_access "${project_template_functions_file}"
+readonly bad_chars_grep_string='\!|\@|\#|\$|\%|\^|\ |\&|\*|\(|\)|\{|\}|\\|\/'
 
 project_name="$1"
 project_version="$2"
@@ -31,21 +35,33 @@ main(){
     exit 0
   fi
 
-  test_slash_in_project_name="$( echo "${project_name}" | grep '/' )"
-  [ -n "${test_slash_in_project_name}" ] && abrt "Please do not use the / character in project names"
+  # basic test for chars we do not want
+  test_bad_chars="$( echo "${project_name}" | grep -E "${bad_chars_grep_string}" )"
+  [ -n "${test_bad_chars}" ] && abrt "Please do not use special characters in the project name"
 
   test_access "${project_parent_directory}"
   project_directory="${project_parent_directory}/${project_name}"
+  project_includes_directory="${project_directory}/includes"
   [ -d "${project_directory}" ] && abrt "Project directory ${project_directory} already exists"
 
   echo
   echo "Creating project... "
-  mkdir "${project_directory}"
+  mkdir "${project_directory}" || abrt "unable to create directory ${project_directory}"
+  mkdir "${project_includes_directory}"
   project_file="${project_directory}/${project_name}"
+  project_vars_file="${project_includes_directory}/${project_name}-vars.sh"
+  project_functions_file="${project_includes_directory}/${project_name}-functions.sh"
+  functions_file="${project_includes_directory}/bash-project.sh"
   cp "${project_template_file}" "${project_file}"
+  cp "${project_template_vars_file}" "${project_vars_file}"
+  cp "${project_template_functions_file}" "${project_functions_file}"
+  cp "${template_functions_file}" "${functions_file}"
   chmod +x "${project_file}"
+   
   sed -i "s/PROJECT_NAME/${project_name}/g" "${project_file}" 2>/dev/null || sed -i '' "s/PROJECT_NAME/${project_name}/g" "${project_file}"
   sed -i "s/PROJECT_VERSION/${project_version}/g" "${project_file}" 2>/dev/null || sed -i '' "s/PROJECT_VERSION/${project_version}/g" "${project_file}"
+  sed -i "s/PROJECT_NAME/${project_name}/g" "${project_vars_file}" 2>/dev/null || sed -i '' "s/PROJECT_NAME/${project_name}/g" "${project_vars_file}"
+  sed -i "s/PROJECT_VERSION/${project_version}/g" "${project_vars_file}" 2>/dev/null || sed -i '' "s/PROJECT_VERSION/${project_version}/g" "${project_vars_file}"
   echo
   echo "Completed. Project created in ${project_directory}."
 

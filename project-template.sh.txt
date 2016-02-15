@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# PROJECT_NAME PROJECT_VERSION
+
+# BASH MODES
+set -u
+set -o pipefail
+
+# CONSTANTS
+readonly home_dir="$( cd "$( dirname $0 )" ; pwd )"
+readonly includes_dir="${home_dir}/includes"
+
+# INCLUDES
+source "${includes_dir}/bash-project.sh"
+source "${includes_dir}/PROJECT_NAME-vars.sh"
+source "${includes_dir}/PROJECT_NAME-functions.sh"
+
+# MAIN
+main() {
+  msg "============================================"
+  msg "- ${project_name} ${project_version}"
+  msg "============================================"
+  msg ""
+  :
+}
+
+main $@
