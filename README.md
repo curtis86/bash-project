@@ -2,18 +2,20 @@
 
 ## A. Summary
 
-Quickly generate a simple BASH project from a set of template files. Some of the following functions are provided in bash-project:
+Quickly generate a simple BASH project from a set of template files. Apart from setting up the project structure, some of the following functions are provided in bash-project:
 
  * Text formatting (bold, normal, green, red and yellow)
  * Trap control
  * Message and error printing
  * File/directory access check
+ * Yes/No prompt
+ * Script usage function
 
 Feel free to use as your own/improve on.
 
 ## B. Dependencies
 
-BASH 4 or later.
+BASH 4 or later (may require some adjustments to work with older versions of BASH).
 
 ## C. Supported Systems
 
@@ -63,6 +65,7 @@ t_normal
 t_red
 t_yellow
 usage
+yesno
 
 ```
 
