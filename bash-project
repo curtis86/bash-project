@@ -35,9 +35,9 @@ main(){
     exit 0
   fi
 
-  # basic test for chars we do not want
-  test_bad_chars="$( echo "${project_name}" | grep -E "${bad_chars_grep_string}" )"
-  [ -n "${test_bad_chars}" ] && abrt "Please do not use special characters in the project name"
+  # Disallow any character that is not alphanumeric, - or _
+  contains_bad_chars="$( echo "${project_name}" | sed 's/_/XXUNDERSCOREXX/g' | sed 's/-/XXDASHXX/g' | tr -d '[:alnum:]' )"
+  [ -n "${contains_bad_chars}" ] && abrt "Please do not use special characters in the project name. Project names are limited to alphanumeric, - and _"
 
   test_access "${project_parent_directory}"
   project_directory="${project_parent_directory}/${project_name}"
@@ -46,24 +46,29 @@ main(){
 
   echo
   echo "Creating project... "
+  
   mkdir "${project_directory}" || abrt "unable to create directory ${project_directory}"
   mkdir "${project_includes_directory}"
+  
   project_file="${project_directory}/${project_name}"
   project_vars_file="${project_includes_directory}/${project_name}-vars.sh"
   project_functions_file="${project_includes_directory}/${project_name}-functions.sh"
   functions_file="${project_includes_directory}/bash-project.sh"
+  
   cp "${project_template_file}" "${project_file}"
   cp "${project_template_vars_file}" "${project_vars_file}"
   cp "${project_template_functions_file}" "${project_functions_file}"
   cp "${template_functions_file}" "${functions_file}"
+  
   chmod +x "${project_file}"
-   
+  
+  # Multiple OR sed statements to work with sed on OS X 
   sed -i "s/PROJECT_NAME/${project_name}/g" "${project_file}" 2>/dev/null || sed -i '' "s/PROJECT_NAME/${project_name}/g" "${project_file}"
   sed -i "s/PROJECT_VERSION/${project_version}/g" "${project_file}" 2>/dev/null || sed -i '' "s/PROJECT_VERSION/${project_version}/g" "${project_file}"
   sed -i "s/PROJECT_NAME/${project_name}/g" "${project_vars_file}" 2>/dev/null || sed -i '' "s/PROJECT_NAME/${project_name}/g" "${project_vars_file}"
   sed -i "s/PROJECT_VERSION/${project_version}/g" "${project_vars_file}" 2>/dev/null || sed -i '' "s/PROJECT_VERSION/${project_version}/g" "${project_vars_file}"
   echo
-  echo "Completed. Project created in ${project_directory}."
+  echo "Completed. Project created in ${project_directory}"
 
 }
 main $@

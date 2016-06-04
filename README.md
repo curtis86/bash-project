@@ -10,6 +10,8 @@ Quickly generate a simple BASH project from a set of template files. Apart from 
  * File/directory access check
  * Yes/No prompt
  * Script usage function
+ * String to uppwer/lower
+ * Dependency checker
 
 Feel free to use as your own/improve on.
 
@@ -47,26 +49,36 @@ Any nix or BSD system with BASH 4 or later (may require some adjustments to work
 
 This will create a project called "my_new_project", with version 0.1 in directory /Users/curtis/Code/my_new_project .
 
+### Projects that use bash-project
+
+ * [solar-flare-alert](https://github.com/curtis86/solar-flare-alert)
+ * [tinc-mgr](https://github.com/curtis86/tinc-mgr)
+
 ### Reserved names
 
 ```
 abrt
+check_dependencies
 force_exit
 home_dir
 includes_dir
+lmsg
 main
 msg
 project_name
 project_version
+script_dependencies
 t_bold
-test_access
 t_green
 t_normal
 t_red
 t_yellow
+test_access
+to_lower
+to_upper
 usage
+vmsg
 yesno
-
 ```
 
 ### Notes
