@@ -32,13 +32,15 @@ Any nix or BSD system with BASH 4 or later (may require some adjustments to work
 ### Usage
 
   ```
-  ./bash-project <project_name> <project_version> <project_parent_directory>
+  ./bash-project <project_name> <project_parent_directory>
   ```
+
+Included functions can be found in the `includes/bp.sh` file in your created project. Note that functions included by bash-project are prefixed with `bp`, ie: `bp::msg`
 
 ### Usage example
 
   ```
-  ./bash-project my_new_project 0.1 /Users/curtis/Code
+  ./bash-project my_new_project /Users/curtis/Code
 
   Are you sure you want to create project my_new_project 0.1 in /Users/curtis/Code (/Users/curtis/Code/my_new_project/) ? <y/n> y
 
@@ -47,7 +49,7 @@ Any nix or BSD system with BASH 4 or later (may require some adjustments to work
   Completed. Project created in /Users/curtis/Code/my_new_project.
   ```
 
-This will create a project called "my_new_project", with version 0.1 in directory /Users/curtis/Code/my_new_project .
+This will create a project called "my_new_project" in directory /Users/curtis/Code/my_new_project .
 
 ### Projects that use bash-project
 
@@ -61,24 +63,18 @@ abrt
 check_dependencies
 force_exit
 home_dir
-includes_dir
-lmsg
+HOME_DIR
+INCLUDES_DIR
 main
-msg
-project_name
-project_version
-script_dependencies
+PROJECT_NAME
+SCRIPT_DEPENDENCIES
 t_bold
 t_green
 t_normal
 t_red
 t_yellow
 test_access
-to_lower
-to_upper
 usage
-vmsg
-yesno
 ```
 
 ### Notes

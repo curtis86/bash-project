@@ -1,0 +1,7 @@
+# Project variables and constants go here
+
+# CONSTANTS
+readonly PROJECT_NAME="__PROJECT_NAME__"
+readonly PROGNAME="$( basename $0 )"
+readonly LOG_FILE=""
+readonly SCRIPT_DEPENDENCIES=( "bash" )

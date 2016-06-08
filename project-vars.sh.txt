@@ -1,8 +1,0 @@
-# Project variables and constants go here
-
-# CONSTANTS
-readonly project_name="PROJECT_NAME"
-readonly project_version="PROJECT_VERSION"
-readonly progname="$( basename $0 )"
-readonly log_file=""
-readonly script_depdendencies=( "bash" )

@@ -10,24 +10,22 @@ set -o pipefail
 
 # SCRIPT FUNCTIONS
 abrt() { echo "ERROR: $@ -- exiting." 1>&2 ; exit 1 ;}
-usage() { echo -e "\nUsage: $( basename $0 ) <project_name> <project_version> <project_parent_directory>" ;}
+usage() { echo -e "\nUsage: $( basename $0 ) <project_name> <project_parent_directory>" ;}
 test_access() { test_target="$1" ; [ ! -w "${test_target}" ] && abrt "Unable to access ${test_target}" ;}
 
-readonly REQ_ARGS=3 ; [ $# -ne ${REQ_ARGS} ] && usage && exit 1
-readonly home_dir="$( cd "$( dirname $0 )" ; pwd )"
-readonly template_functions_file="${home_dir}/bash-project.sh.txt" ; test_access "${template_functions_file}"
-readonly project_template_file="${home_dir}/project-template.sh.txt" ; test_access "${project_template_file}"
-readonly project_template_vars_file="${home_dir}/project-vars.sh.txt" ; test_access "${project_template_vars_file}"
-readonly project_template_functions_file="${home_dir}/project-functions.sh.txt" ; test_access "${project_template_functions_file}"
-readonly bad_chars_grep_string='\!|\@|\#|\$|\%|\^|\ |\&|\*|\(|\)|\{|\}|\\|\/'
+readonly REQ_ARGS=2 ; [ $# -ne ${REQ_ARGS} ] && usage && exit 1
+readonly HOME_DIR="$( cd "$( dirname $0 )" ; pwd )"
+readonly TEMPLATE_FUNCTIONS_FILE="${HOME_DIR}/bp.sh.txt" ; test_access "${TEMPLATE_FUNCTIONS_FILE}"
+readonly PROJECT_TEMPLATE_FILE="${HOME_DIR}/project_template.sh.txt" ; test_access "${PROJECT_TEMPLATE_FILE}"
+readonly PROJECT_TEMPLATE_VARS_FILE="${HOME_DIR}/project_vars.sh.txt" ; test_access "${PROJECT_TEMPLATE_VARS_FILE}"
+readonly PROJECT_TEMPLATE_FUNCTIONS_FILE="${HOME_DIR}/project_functions.sh.txt" ; test_access "${PROJECT_TEMPLATE_FUNCTIONS_FILE}"
 
 project_name="$1"
-project_version="$2"
-project_parent_directory="$3"
+project_parent_directory="$2"
 
 main(){
   echo
-  echo -n "Are you sure you want to create project ${project_name} ${project_version} in ${project_parent_directory} (${project_parent_directory}/${project_name}/) ? <y/n> "
+  echo -n "Are you sure you want to create project ${project_name} in ${project_parent_directory} (${project_parent_directory}/${project_name}/) ? <y/n> "
   read create_confirmation < /dev/tty
   create_confirmation="$( echo "${create_confirmation}" | tr '[A-Z]' '[a-z]' )"
   if [ "${create_confirmation}" != "y" ]; then
@@ -51,24 +49,23 @@ main(){
   mkdir "${project_includes_directory}"
   
   project_file="${project_directory}/${project_name}"
-  project_vars_file="${project_includes_directory}/${project_name}-vars.sh"
-  project_functions_file="${project_includes_directory}/${project_name}-functions.sh"
-  functions_file="${project_includes_directory}/bash-project.sh"
+  project_vars_file="${project_includes_directory}/${project_name}_vars.sh"
+  project_functions_file="${project_includes_directory}/${project_name}_functions.sh"
+  functions_file="${project_includes_directory}/bp.sh"
   
-  cp "${project_template_file}" "${project_file}"
-  cp "${project_template_vars_file}" "${project_vars_file}"
-  cp "${project_template_functions_file}" "${project_functions_file}"
-  cp "${template_functions_file}" "${functions_file}"
+  cp "${PROJECT_TEMPLATE_FILE}" "${project_file}"
+  cp "${PROJECT_TEMPLATE_VARS_FILE}" "${project_vars_file}"
+  cp "${PROJECT_TEMPLATE_FUNCTIONS_FILE}" "${project_functions_file}"
+  cp "${TEMPLATE_FUNCTIONS_FILE}" "${functions_file}"
   
   chmod +x "${project_file}"
   
   # Multiple OR sed statements to work with sed on OS X 
-  sed -i "s/PROJECT_NAME/${project_name}/g" "${project_file}" 2>/dev/null || sed -i '' "s/PROJECT_NAME/${project_name}/g" "${project_file}"
-  sed -i "s/PROJECT_VERSION/${project_version}/g" "${project_file}" 2>/dev/null || sed -i '' "s/PROJECT_VERSION/${project_version}/g" "${project_file}"
-  sed -i "s/PROJECT_NAME/${project_name}/g" "${project_vars_file}" 2>/dev/null || sed -i '' "s/PROJECT_NAME/${project_name}/g" "${project_vars_file}"
-  sed -i "s/PROJECT_VERSION/${project_version}/g" "${project_vars_file}" 2>/dev/null || sed -i '' "s/PROJECT_VERSION/${project_version}/g" "${project_vars_file}"
+  sed -i "s/__PROJECT_NAME__/${project_name}/g" "${project_file}" 2>/dev/null || sed -i '' "s/__PROJECT_NAME__/${project_name}/g" "${project_file}"
+  sed -i "s/__PROJECT_NAME__/${project_name}/g" "${project_vars_file}" 2>/dev/null || sed -i '' "s/__PROJECT_NAME__/${project_name}/g" "${project_vars_file}"
   echo
   echo "Completed. Project created in ${project_directory}"
+  echo
 
 }
 main $@

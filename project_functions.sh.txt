@@ -1,0 +1,11 @@
+# Project functions go here
+:
+
+# usage: prints script usage
+usage() {
+  echo
+  echo "Usage: ${PROGNAME} <options>"
+  echo
+  echo "OPTIONS"
+  echo " * No options have been defined"
+}
