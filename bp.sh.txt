@@ -67,7 +67,7 @@ bp::to_lower() {
 # arg1: none. iterates over the script_depdendencies array declared in vars.
 bp::check_dependencies() {
   
-  for dependency in "${script_depdendencies[@]}" ; do
+  for dependency in "${SCRIPT_DEPENDENCIES[@]}" ; do
     if ! which "${dependency}" >/dev/null 2>&1 ; then
       bp::abrt "Dependency ${dependency} not found"
     fi
