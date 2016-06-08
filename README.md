@@ -42,7 +42,7 @@ Included functions can be found in the `includes/bp.sh` file in your created pro
   ```
   ./bash-project my_new_project /Users/curtis/Code
 
-  Are you sure you want to create project my_new_project 0.1 in /Users/curtis/Code (/Users/curtis/Code/my_new_project/) ? <y/n> y
+  Are you sure you want to create project my_new_project in /Users/curtis/Code (/Users/curtis/Code/my_new_project/) ? <y/n> y
 
   Creating project...
 
@@ -59,10 +59,6 @@ This will create a project called "my_new_project" in directory /Users/curtis/Co
 ### Reserved names
 
 ```
-abrt
-check_dependencies
-force_exit
-home_dir
 HOME_DIR
 INCLUDES_DIR
 main
@@ -73,7 +69,6 @@ t_green
 t_normal
 t_red
 t_yellow
-test_access
 usage
 ```
 
