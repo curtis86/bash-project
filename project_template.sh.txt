@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# PROJECT_NAME PROJECT_VERSION
+# __PROJECT_NAME__
 
 # BASH MODES
 set -u
